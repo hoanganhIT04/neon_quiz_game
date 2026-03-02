@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/jpeg" href="media/favicon.jpg">
+<title>Mini Game</title>
+<link rel="stylesheet" href="asset/style.css">
+</head>
+<body>
+
+<section id="homeScreen" class="screen active">
+    <h1>🎉 MINI GAME 🎉</h1>
+
+    <label>Chọn số đội:</label>
+    <div class="select-wrapper">
+      <select id="teamCount">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8" selected>8</option>
+      </select>
+      <span class="arrow">▼</span>
+  </div>
+
+    <button id="startBtn">BẮT ĐẦU</button>
+</section>
+
+
+<section id="gameScreen" class="screen">
+
+    <div class="top-bar">
+        Đội: <span id="playerDisplay"></span>
+        | Điểm: <span id="scoreDisplay"></span>
+        | ⏳ <span id="timer">30</span>s
+    </div>
+    <div id="pointInfo" class="point-info"></div>
+    <div id="mediaBox" class="hidden">
+        <img id="questionImage">
+        <video id="questionVideo" controls></video>
+    </div>
+
+    <h2 id="questionText"></h2>
+
+    <div id="answerBox"></div>
+    
+    <div id="fillBox" class="hidden">
+        <input type="text" id="fillInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button id="submitFill">Xác nhận</button>
+    </div>
+    <div id="correctAnswerText" class="hidden"></div>
+    <div id="nextBox" class="hidden">
+        <button id="nextBtn">TIẾP TỤC ➜</button>
+    </div>
+</section>
+<div id="scoreBoard" class="score-board hidden"></div>
+
+<section id="resultScreen" class="screen">
+    <h2>🏆 KẾT QUẢ</h2>
+    <div id="resultBoard"></div>
+    <button onclick="location.reload()">Chơi lại</button>
+</section>
+
+<script src="asset/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</body>
+</html>
