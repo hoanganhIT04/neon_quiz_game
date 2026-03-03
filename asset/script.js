@@ -133,43 +133,53 @@ function renderMedia(q){
     const box = document.getElementById("mediaBox");
     const img = document.getElementById("questionImage");
     const video = document.getElementById("questionVideo");
+    const audio = document.getElementById("questionAudio");
+    const audioBox = document.getElementById("audioBox");
 
+    // ===== RESET HOÀN TOÀN =====
     img.classList.add("hidden");
     video.classList.add("hidden");
+    audioBox.classList.add("hidden");
 
     img.src = "";
+
     video.pause();
-    video.src = "";
+    video.currentTime = 0;
+    video.removeAttribute("src");
+    video.load();
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.removeAttribute("src");
+    audio.load();
 
     let hasMedia = false;
 
-    // IMAGE
-    if(q.image){
-        img.src = "media/" + q.image;
+    // ===== IMAGE =====
+    if(q.image && q.image.trim() !== ""){
+        img.src = "media/" + q.image.trim();
         img.classList.remove("hidden");
         hasMedia = true;
     }
 
-    // VIDEO
-    if(q.video){
-        video.src = "media/" + q.video;
+    // ===== VIDEO =====
+    if(q.video && q.video.trim() !== ""){
+        video.src = "media/" + q.video.trim();
         video.classList.remove("hidden");
         video.load();
         hasMedia = true;
     }
 
-    if(hasMedia){
-        box.classList.remove("hidden");
-    } else {
-        box.classList.add("hidden");
+    // ===== SOUND =====
+    if(q.sound && q.sound.trim() !== ""){
+        audio.src = "media/" + q.sound.trim();
+        audioBox.classList.remove("hidden");
+        audio.load();
+        hasMedia = true;
     }
 
-    // 🔊 SOUND CÂU HỎI (THÊM MỚI)
-    if(q.sound){
-        const questionSound = new Audio("media/" + q.sound);
-        questionSound.volume = 1;
-        questionSound.play();
-    }
+    // Ẩn toàn bộ box nếu không có media
+    box.classList.toggle("hidden", !hasMedia);
 }
 
 // ================= ANSWERS =================
