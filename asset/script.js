@@ -55,7 +55,10 @@ async function loadCSV() {
         correct: row.correct?.trim() || "",
         base_point: parseInt(row.base_point) || 0,
         bonus_point: parseInt(row.bonus_point) || 0,
-        bet_options: row.bet_options
+        bet_options: row.bet_options,
+
+        explanation: row.explanation?.trim() || "",
+        explanation_image: row.explanation_image
     }));
 }
 
@@ -86,6 +89,9 @@ function loadQuestion(){
     document.getElementById("correctAnswerText").classList.add("hidden");
     document.getElementById("correctAnswerText").innerText="";
     document.getElementById("answerBox").innerHTML="";
+    document.getElementById("explanationBox").classList.add("hidden");
+    document.getElementById("explanationText").innerText = "";
+    document.getElementById("explanationImage").classList.add("hidden");
     if(currentQuestion>=questions.length){
         showResult();
         return;
@@ -277,6 +283,7 @@ function checkAnswer(choice){
         players[currentPlayer].score;
     renderScoreBoard();
     showNextButton();
+    showExplanation(q);
 }
 
 function submitFill(){
@@ -330,6 +337,7 @@ function submitFill(){
 
     renderScoreBoard();
     showNextButton();
+    showExplanation(q);
 }
 // ================= TURN =================
 
@@ -460,3 +468,21 @@ document.addEventListener("click", () => {
         bgSound.play().catch(()=>{});
     }
 }, { once: true });
+
+function showExplanation(q){
+    const box = document.getElementById("explanationBox");
+    const text = document.getElementById("explanationText");
+    const img = document.getElementById("explanationImage");
+
+    if(!q.explanation) return;
+
+    text.innerText = q.explanation;
+    box.classList.remove("hidden");
+
+    if(q.explanation_image && q.explanation_image.trim() !== ""){
+        img.src = "media/" + q.explanation_image.trim();
+        img.classList.remove("hidden");
+    } else {
+        img.classList.add("hidden");
+    }
+}
