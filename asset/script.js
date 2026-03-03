@@ -46,6 +46,7 @@ async function loadCSV() {
         type: row.type,
         question: row.question?.trim() || "",
         image: row.image,
+        sound: row.sound,
         video: row.video,
         A: row.A,
         B: row.B,
@@ -129,25 +130,45 @@ function resetTimer(){
 // ================= MEDIA =================
 
 function renderMedia(q){
-    const box=document.getElementById("mediaBox");
-    const img=document.getElementById("questionImage");
-    const video=document.getElementById("questionVideo");
+    const box = document.getElementById("mediaBox");
+    const img = document.getElementById("questionImage");
+    const video = document.getElementById("questionVideo");
 
     img.classList.add("hidden");
     video.classList.add("hidden");
 
+    img.src = "";
+    video.pause();
+    video.src = "";
+
+    let hasMedia = false;
+
+    // IMAGE
     if(q.image){
-        img.src="media/"+q.image;
+        img.src = "media/" + q.image;
         img.classList.remove("hidden");
-        box.classList.remove("hidden");
+        hasMedia = true;
     }
-    else if(q.video){
-        video.src="media/"+q.video;
+
+    // VIDEO
+    if(q.video){
+        video.src = "media/" + q.video;
         video.classList.remove("hidden");
-        box.classList.remove("hidden");
+        video.load();
+        hasMedia = true;
     }
-    else{
+
+    if(hasMedia){
+        box.classList.remove("hidden");
+    } else {
         box.classList.add("hidden");
+    }
+
+    // 🔊 SOUND CÂU HỎI (THÊM MỚI)
+    if(q.sound){
+        const questionSound = new Audio("media/" + q.sound);
+        questionSound.volume = 1;
+        questionSound.play();
     }
 }
 

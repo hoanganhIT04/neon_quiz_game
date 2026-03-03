@@ -44,7 +44,7 @@ Question.csv
 ### 📝 CSV Format Example
 
 ```csv
-id,round,type,question,image,video,A,B,C,D,correct,base_point,bet_options,bonus_point
+id,round,type,question,image,sound,video,A,B,C,D,correct,base_point,bet_options,bonus_point
 ## 📖 Field Explanation
 
 | Field | Description |
@@ -54,6 +54,7 @@ id,round,type,question,image,video,A,B,C,D,correct,base_point,bet_options,bonus_
 | type | Question type (mcq = multiple choice question) |
 | question | Question content |
 | image | Image path (leave empty if not used) |
+| sound | Sound path (leave empty if not used) |
 | video | Video path (leave empty if not used) |
 | A | Answer option A |
 | B | Answer option B |

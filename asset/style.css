@@ -301,14 +301,39 @@ button:active{
     100%{transform:scale(1)}
 }
 
-/* ================= IMAGE ================= */
+/* ================= MEDIA BOX ================= */
 
+#mediaBox{
+    width:100%;
+    max-height:400px;
+    margin:20px 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* IMAGE */
 #questionImage{
-    max-width:300px;
+    max-width:100%;
+    max-height:350px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+
     border-radius:15px;
-    margin-bottom:20px;
     box-shadow:0 0 30px rgba(255,0,200,0.6);
     animation: zoomIn 0.6s ease;
+}
+
+/* VIDEO */
+#questionVideo{
+    max-width:100%;
+    max-height:350px;
+    width:auto;
+    height:auto;
+    border-radius:15px;
+    box-shadow:0 0 30px rgba(0,255,255,0.6);
 }
 
 @keyframes zoomIn{
