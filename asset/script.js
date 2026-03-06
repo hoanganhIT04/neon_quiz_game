@@ -342,41 +342,53 @@ function submitFill(){
 // ================= TURN =================
 
 function nextTurn(){
-    const q=questions[currentQuestion];
-    const buttons=document.querySelectorAll("#answerBox button");
+    const q = questions[currentQuestion];
+    const buttons = document.querySelectorAll("#answerBox button");
 
-    const correctText=document.getElementById("correctAnswerText");
+    const correctText = document.getElementById("correctAnswerText");
     correctText.classList.add("hidden");
-    correctText.innerText="";
+    correctText.innerText = "";
 
-    if(q.type==="mcq"){
+    // ===== MULTIPLE CHOICE =====
+    if(q.type === "mcq"){
+
         buttons.forEach(btn=>{
-            btn.disabled=true;
-            const letter=btn.dataset.letter;
+            btn.disabled = true;
+            const letter = btn.dataset.letter;
 
+            // HẾT GIỜ KHÔNG TRẢ LỜI
             if(!hasAnswered){
-                // Hết giờ -> tô đỏ đáp án đúng (vì người chơi sai)
-                if(letter===q.correct){
-                    btn.classList.add("wrong");
+                if(letter === q.correct){
+                    btn.classList.add("wrong"); // đỏ
                 }
             }
+
+            // ĐÃ TRẢ LỜI
             else{
-                // Trường hợp đã trả lời -> giữ logic cũ
-                if(letter===q.correct){
-                    btn.classList.add("correct");
+                if(letter === q.correct){
+                    btn.classList.add("correct"); // xanh
                 }
             }
+
         });
     }
 
-    if(q.type==="fill"){
-        const input=document.getElementById("fillInput");
+    // ===== FILL QUESTION =====
+    if(q.type === "fill"){
+
+        const input = document.getElementById("fillInput");
+        const submitBtn = document.getElementById("submitFill");
+
+        input.disabled = true;
+        submitBtn.disabled = true;
 
         input.classList.remove("correct","wrong");
 
+        // Hết giờ hoặc trả lời sai
         if(!answeredCorrectly){
             input.classList.add("wrong");
-            correctText.innerText="Đáp án đúng: " + q.correct;
+
+            correctText.innerText = "Đáp án đúng: " + q.correct;
             correctText.classList.remove("hidden");
         }
     }
