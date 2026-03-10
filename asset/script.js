@@ -86,6 +86,7 @@ function showScreen(id){
 // ================= LOAD QUESTION =================
 
 function loadQuestion(){
+    hasAnswered = false;
     document.getElementById("correctAnswerText").classList.add("hidden");
     document.getElementById("correctAnswerText").innerText="";
     document.getElementById("answerBox").innerHTML="";
@@ -318,10 +319,21 @@ function submitFill(){
     }
 
     if(isCorrect){
-        players[currentPlayer].score += q.base_point;
+
+        if(q.round === "bet"){
+            players[currentPlayer].score += parseInt(q.bonus_point);
+        } else {
+            players[currentPlayer].score += q.base_point;
+        }
+
         input.classList.add("correct");
         correctSound.play();
     } else {
+
+        if(q.round === "bet"){
+            players[currentPlayer].score -= q.bet_options;
+        }
+
         input.classList.add("wrong");
         correctText.innerText = "Đáp án đúng: " + correctAnswer;
         correctText.classList.remove("hidden");
@@ -358,19 +370,29 @@ function nextTurn(){
 
             // HẾT GIỜ KHÔNG TRẢ LỜI
             if(!hasAnswered){
+
+                if(q.round === "bet"){
+                    players[currentPlayer].score -= parseInt(q.bet_options);
+                }
+
                 if(letter === q.correct){
-                    btn.classList.add("wrong"); // đỏ
+                    btn.classList.add("wrong");
                 }
             }
 
             // ĐÃ TRẢ LỜI
             else{
                 if(letter === q.correct){
-                    btn.classList.add("correct"); // xanh
+                    btn.classList.add("correct");
                 }
             }
-
         });
+
+        // cập nhật điểm UI
+        document.getElementById("scoreDisplay").innerText =
+            players[currentPlayer].score;
+
+        renderScoreBoard();
     }
 
     // ===== FILL QUESTION =====
@@ -384,13 +406,23 @@ function nextTurn(){
 
         input.classList.remove("correct","wrong");
 
-        // Hết giờ hoặc trả lời sai
-        if(!answeredCorrectly){
+        // hết giờ chưa trả lời
+        if(!hasAnswered){
+
+            if(q.round === "bet"){
+                players[currentPlayer].score -= parseInt(q.bet_options);
+            }
+
             input.classList.add("wrong");
 
             correctText.innerText = "Đáp án đúng: " + q.correct;
             correctText.classList.remove("hidden");
         }
+
+        document.getElementById("scoreDisplay").innerText =
+            players[currentPlayer].score;
+
+        renderScoreBoard();
     }
 
     showNextButton();
